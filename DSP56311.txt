@@ -1,0 +1,26 @@
+14 14 20 1 1
+. . . . . . D . . . . . . . 
+. . . . . . . . . . . . . . 
+. . . . . . L . D . D . . . 
+. . . . . . . . . . . . . D 
+. S . . . . . . . . . . . . 
+. . . . . . . . . . . H . . 
+. . . . . . . . . . . . L . 
+H L . . . . . . . . . A . . 
+. . . . . . . . . . . . . . 
+S . . . . . . . . . . A . . 
+. . . . . . . . . . . A . . 
+. . . O . P H . . . . . . . 
+. . . . . . . . L . . C . . 
+. . . . . . . . C . . . . . 
+
+
+Format for first line: rows, columns, pincount, decap depth, tolerence of decap adjacency
+VCCP	P
+VCCQL	L
+VCCQH	H
+VCCA	A
+VCCD	D
+VCCC	C
+VCCH 	O
+VCCS	S
