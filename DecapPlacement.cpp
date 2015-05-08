@@ -207,12 +207,13 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	#pragma omp parallel for num_threads(20) schedule(guided)
 	for(int i = 0; i < threadCount; ++i){
 		totalDistance = 0;
-		for(int i = 0; i < decaps_num/4; ++i){
-			totalDistance += tracking[threadCount][i].distance;
+		for(int j = 0; j < decaps_num/4; ++j){
+			totalDistance += tracking[threadCount][j].distance;
 		}
 
 		// TODO: execute the sequential;
-		execute_permutations_concurrent((int)decaps_num/4), totalDistance, &pinmap[i], tracking[i]);
+		uint8_t decapIndex = (int)(decaps_num/4);
+		execute_permutations_concurrent(decapIndex, totalDistance, &pinmap[i], tracking[i]);
 	}
 	//cout << "Number of Parallel Threads:" << numThreads << " Size of PinMap " << sizeof(pinMap) << ' ' << sizeof(PinMap) << '\n';
 

@@ -78,7 +78,7 @@ int main(int argc, char **argv){
 	Placement * placementTracking_sequential = new Placement[numberPins];
 	
 	clock_t time_start = clock();
-	//DecapPlacement optimizer(numberPins, decaps);
+	DecapPlacement optimizer(numberPins, decaps);
 	//optimizer.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
 	clock_t time_end = clock();
 
