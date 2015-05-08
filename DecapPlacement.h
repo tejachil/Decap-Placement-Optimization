@@ -22,6 +22,8 @@ class DecapPlacement{
 public:
 	unsigned short decaps_num;
 	Decap * decaps;
+
+	long counter;
 	
 	DecapPlacement(uint8_t numDecaps, Decap * decapsPointer);
 	~DecapPlacement();

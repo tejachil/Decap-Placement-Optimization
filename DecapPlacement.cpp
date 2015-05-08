@@ -6,13 +6,13 @@
 
 using namespace std;
 
-static long counter = 0;
 static double bestDistance;
 
 DecapPlacement::DecapPlacement(uint8_t numDecaps, Decap * decapsPointer){
 	decaps_num = numDecaps;
 	decaps = decapsPointer;
 	bestDistance = decaps_num * decaps[0].row_count * decaps[0].row_count;
+	counter = 0;
 }
 
 DecapPlacement::~DecapPlacement(){
@@ -24,7 +24,7 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 			if (distance < bestDistance){
 				bestDistance = distance;
 				//cout << "\n";
-				cout << counter << ":\n";
+				//cout << counter << ":\n";
 				for(int i = 0; i < decapIndex; ++i){
 				/*	cout << decaps[i].associated_pin->name << '(' 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','

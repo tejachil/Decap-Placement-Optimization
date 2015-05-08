@@ -83,7 +83,7 @@ int main(int argc, char **argv){
 	clock_t time_end = clock();
 
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";
-
+	cout << "COUNTER = " << optimizer.counter << '\n';
 	cout << "EXECUTING PARALLEL\n";
 	PinMap * pinMap_parallel = new PinMap(rows, columns, decapDepth);
 	
@@ -91,7 +91,8 @@ int main(int argc, char **argv){
 	optimizer.execute_permutations_parallel(pinMap_parallel);
 	time_end = clock();
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for parallel.\n";
-
+	cout << "COUNTER = " << optimizer.counter << '\n';
+	
 	PinMap * pinMap = pinMap_sequential;
 	Placement * placementTracking = placementTracking_sequential;
 
