@@ -79,7 +79,7 @@ int main(int argc, char **argv){
 	
 	clock_t time_start = clock();
 	DecapPlacement optimizer(numberPins, decaps);
-	//optimizer.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
+	optimizer.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
 	clock_t time_end = clock();
 
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";

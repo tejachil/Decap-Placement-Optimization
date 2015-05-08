@@ -1,6 +1,7 @@
 #include "DecapPlacement.h"
 #include <iostream>
 #include <cmath>
+#include <time.h>
 #include "omp.h"
 
 using namespace std;
@@ -198,23 +199,26 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 		deplace(&decaps[decapIndex], decapIndex, &pinMap[threadCount], tracking[threadCount]);*/
 
 	}
+
+
+	clock_t time_start = clock();
 	
 	cout << "The CURRENT THREAD COUNT IS " << threadCount << '\n';
-
-
-
-	omp_set_dynamic(0);
-	#pragma omp parallel for num_threads(20) schedule(guided)
+	uint8_t decapIndex = (int)(decaps_num/4);
+	//omp_set_dynamic(0);
+	#pragma omp parallel for num_threads(4) schedule(static)
 	for(int i = 0; i < threadCount; ++i){
 		totalDistance = 0;
 		for(int j = 0; j < decaps_num/4; ++j){
 			totalDistance += tracking[threadCount][j].distance;
 		}
-
-		// TODO: execute the sequential;
-		uint8_t decapIndex = (int)(decaps_num/4);
+		
 		execute_permutations_concurrent(decapIndex, totalDistance, &pinmap[i], tracking[i]);
 	}
+
+	clock_t time_end = clock();
+
+	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for meat of parallel.\n";
 	//cout << "Number of Parallel Threads:" << numThreads << " Size of PinMap " << sizeof(pinMap) << ' ' << sizeof(PinMap) << '\n';
 
 }
