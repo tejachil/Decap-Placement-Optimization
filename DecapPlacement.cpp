@@ -118,8 +118,9 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	int threadCount = 0;
 	double totalDistance = 0;
 	pinmap[0].copy(pinMap);
-#pragma omp parallel
-#pragma omp for
+
+omp_set_dynamic(0);
+#pragma omp parallel for num_threads(numThreads/2) schedule(guided)
 	for(int decapIndex = 0; decapIndex < decaps_num/4 + 1; ++decapIndex){
 		if(decapIndex == ((int)decaps_num/4)){	
 			/*for(int i = 0; i < decapIndex; ++i){
