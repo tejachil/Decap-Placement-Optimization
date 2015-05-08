@@ -6,6 +6,8 @@
 
 using namespace std;
 
+static long counter = 0;
+
 DecapPlacement::DecapPlacement(uint8_t numDecaps, Decap * decapsPointer){
 	decaps_num = numDecaps;
 	decaps = decapsPointer;
@@ -21,7 +23,7 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 		if(decapIndex == decaps_num){
 			if (distance < bestDistance){
 				bestDistance = distance;
-				
+				cout << "\n";
 				for(int i = 0; i < decapIndex; ++i){
 					/*cout << decaps[i].associated_pin->name << '(' 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
@@ -31,6 +33,8 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 				}
 				//cout << "\n\tTotal Distance " << distance << "\n";
 			}
+			counter++;
+			cout << counter << "\t";
 			
 			/*for(int i = 0; i < decapIndex; ++i){
 				cout << decaps[i].associated_pin->name << '(' 
@@ -105,6 +109,8 @@ void DecapPlacement::deplace(Decap * cap, uint8_t decapIndex, PinMap * pinMap, P
 }
 
 void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
+	counter = 0;
+
 	long numThreads = 1;
 	for(int i = 0; i < decaps_num/4; ++i)
 		numThreads *= decaps[i].num_placements;
