@@ -206,7 +206,7 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	cout << "The CURRENT THREAD COUNT IS " << threadCount << '\n';
 	uint8_t decapIndex = (int)(decaps_num/4);
 	//omp_set_dynamic(0);
-	#pragma omp parallel for num_threads(4) schedule(static)
+	#pragma omp parallel for num_threads(25) schedule(static)
 	for(int i = 0; i < threadCount; ++i){
 		totalDistance = 0;
 		for(int j = 0; j < decaps_num/4; ++j){
