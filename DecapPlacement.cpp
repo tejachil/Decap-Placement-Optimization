@@ -119,8 +119,6 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	double totalDistance = 0;
 	pinmap[0].copy(pinMap);
 
-omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads/2) schedule(guided)
 	for(int decapIndex = 0; decapIndex < decaps_num/4 + 1; ++decapIndex){
 		if(decapIndex == ((int)decaps_num/4)){	
 			/*for(int i = 0; i < decapIndex; ++i){
@@ -130,14 +128,14 @@ omp_set_dynamic(0);
 			}
 			cout << "\n\tTotal Distance " << distance << "\n";*/
 		
-			totalDistance = 0;
+			/*totalDistance = 0;
 			for(int i = 0; i < decaps_num/4; ++i){
 				totalDistance += tracking[threadCount][i].distance;
 			}
 
 			// TODO: execute the sequential;
 			execute_permutations_concurrent(decapIndex, totalDistance, &pinmap[threadCount], tracking[threadCount]);
-
+*/
 			++threadCount;
 			if(threadCount < numThreads){
 				//cout << (int)pinmap[threadCount].total_rows << " " << (int)pinmap[threadCount].total_columns << "\n";
@@ -148,7 +146,7 @@ omp_set_dynamic(0);
 					tracking[threadCount][i] = tracking[threadCount-1][i];
 				}
 		
-				cout << threadCount << ": ";
+				//cout << threadCount << ": ";
 				deplace(&decaps[decapIndex - 1], decapIndex - 1, &pinmap[threadCount], tracking[threadCount]);
 			}
 			else{
@@ -204,6 +202,18 @@ omp_set_dynamic(0);
 	cout << "The CURRENT THREAD COUNT IS " << threadCount << '\n';
 
 
+
+	omp_set_dynamic(0);
+	#pragma omp parallel for num_threads(20) schedule(guided)
+	for(int i = 0; i < threadCount; ++i){
+		totalDistance = 0;
+		for(int i = 0; i < decaps_num/4; ++i){
+			totalDistance += tracking[threadCount][i].distance;
+		}
+
+		// TODO: execute the sequential;
+		execute_permutations_concurrent((int)decaps_num/4), totalDistance, &pinmap[i], tracking[i]);
+	}
 	//cout << "Number of Parallel Threads:" << numThreads << " Size of PinMap " << sizeof(pinMap) << ' ' << sizeof(PinMap) << '\n';
 
 }

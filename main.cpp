@@ -78,8 +78,8 @@ int main(int argc, char **argv){
 	Placement * placementTracking_sequential = new Placement[numberPins];
 	
 	clock_t time_start = clock();
-	DecapPlacement optimizer(numberPins, decaps);
-	optimizer.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
+	//DecapPlacement optimizer(numberPins, decaps);
+	//optimizer.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
 	clock_t time_end = clock();
 
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";
@@ -90,7 +90,7 @@ int main(int argc, char **argv){
 	time_start = clock();
 	optimizer.execute_permutations_parallel(pinMap_parallel);
 	time_end = clock();
-	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";
+	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for parallel.\n";
 
 	PinMap * pinMap = pinMap_sequential;
 	Placement * placementTracking = placementTracking_sequential;
