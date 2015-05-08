@@ -3,7 +3,6 @@
 #include <cmath>
 #include <time.h>
 #include "omp.h"
-#include "openacc.h"
 
 using namespace std;
 
@@ -27,13 +26,13 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 				//cout << "\n";
 				cout << counter << ":\n";
 				for(int i = 0; i < decapIndex; ++i){
-					cout << decaps[i].associated_pin->name << '(' 
+				/*	cout << decaps[i].associated_pin->name << '(' 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
 						<< (short)decaps[i].placements[tracking[i].placement_index].y << ") ";
-					
+				*/	
 					tracking[i].best_index = tracking[i].placement_index;
 				}
-				cout << "\n\tTotal Distance " << distance << "\n";
+				//cout << "\n\tTotal Distance " << distance << "\n";
 			}
 			counter++;
 			
