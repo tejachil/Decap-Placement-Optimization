@@ -224,8 +224,14 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	cout << "The CURRENT THREAD COUNT IS " << threadCount << '\n';
 	uint8_t decapIndex = (int)(decaps_num/4);
 	//omp_set_dynamic(0);
-	//#pragma omp parallel for num_threads(4) schedule(dyanmic)
-	#pragma acc kernels loop
+	#if defined(__GNUC__)
+		cout << "Using OpenMP\n";
+		#pragma omp parallel for num_threads(20) schedule(dyanmic)
+	#elif defined(__PGI)
+		cout << "Using OpenACC\n";
+		#pragma acc kernels loop
+	#endif
+	{
 	for(int i = 0; i < threadCount; ++i){
 		totalDistance = 0;
 		for(int j = 0; j < decaps_num/4; ++j){
@@ -233,6 +239,7 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 		}
 		
 		execute_permutations_concurrent(decapIndex, totalDistance, &pinmap[i], tracking[i]);
+	}
 	}
 
 	//cout << "Number of Parallel Threads:" << numThreads << " Size of PinMap " << sizeof(pinMap) << ' ' << sizeof(PinMap) << '\n';
