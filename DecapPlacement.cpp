@@ -1,6 +1,7 @@
 #include "DecapPlacement.h"
 #include <iostream>
 #include <cmath>
+#include "omp.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ DecapPlacement::DecapPlacement(uint8_t numDecaps, Decap * decapsPointer){
 DecapPlacement::~DecapPlacement(){
 }
 
-void DecapPlacement::execute_permutation_sequential(uint8_t decapIndex, double distance, PinMap * pinMap, Placement * tracking){
+void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double distance, PinMap * pinMap, Placement * tracking){
 	static double bestDistance = decaps_num * decaps[0].row_count * decaps[0].row_count;
 	
 	while(true){
@@ -21,13 +22,13 @@ void DecapPlacement::execute_permutation_sequential(uint8_t decapIndex, double d
 				bestDistance = distance;
 				
 				for(int i = 0; i < decapIndex; ++i){
-					cout << decaps[i].associated_pin->name << '(' 
+					/*cout << decaps[i].associated_pin->name << '(' 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
 						<< (short)decaps[i].placements[tracking[i].placement_index].y << ") ";
-					
+					*/
 					tracking[i].best_index = tracking[i].placement_index;
 				}
-				cout << "\n\tTotal Distance " << distance << "\n";
+				//cout << "\n\tTotal Distance " << distance << "\n";
 			}
 			
 			/*for(int i = 0; i < decapIndex; ++i){
@@ -61,7 +62,7 @@ void DecapPlacement::execute_permutation_sequential(uint8_t decapIndex, double d
 		//cout << (int)decapIndex << "-" << (int)decaps[decapIndex].placement_index << " ";
 		
 		double currentDistance = place(&decaps[decapIndex], decapIndex, pinMap, tracking);
-		execute_permutation_sequential(decapIndex + 1, currentDistance + distance, pinMap, tracking);
+		execute_permutations_concurrent(decapIndex + 1, currentDistance + distance, pinMap, tracking);
 		
 		//cout << (int)decapIndex << "-" << (int)decaps[decapIndex].placement_index << "\t";
 		
@@ -85,7 +86,7 @@ double DecapPlacement::place(Decap * cap, uint8_t decapIndex, PinMap * pinMap, P
 		<< "," << (int)cap->placements[tracking[decapIndex].placement_index].y 
 		<< ") distance = " << dist << "\n";*/
 	pinMap->map[cap->placements[tracking[decapIndex].placement_index].y][cap->placements[tracking[decapIndex].placement_index].x] = cap->associated_pin->name;
-	
+	//pinMap->map[cap->placements[tracking[decapIndex].placement_index].y][cap->placements[tracking[decapIndex].placement_index].x] << '\n';
 	return dist;
 }
 
@@ -94,9 +95,114 @@ void DecapPlacement::deplace(Decap * cap, uint8_t decapIndex, PinMap * pinMap, P
 		<< " at " << "(" << (int)cap->placements[tracking[decapIndex].placement_index].x 
 		<< "," << (int)cap->placements[tracking[decapIndex].placement_index].y 
 		<< ") \n";*/
-	pinMap->map[cap->placements[tracking[decapIndex].placement_index].y][cap->placements[tracking[decapIndex].placement_index].x] = ' ';
 
+	pinMap->map[cap->placements[tracking[decapIndex].placement_index].y][cap->placements[tracking[decapIndex].placement_index].x] = ' ';
+	
 	if(tracking[decapIndex].placement_index < cap->num_placements - 1)
 		++tracking[decapIndex].placement_index;
 	else	tracking[decapIndex].tried_all = true;
+}
+
+void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
+	long numThreads = 1;
+	for(int i = 0; i < decaps_num/4; ++i)
+		numThreads *= decaps[i].num_placements;
+
+	PinMap * pinmap = new PinMap[numThreads];
+	Placement ** tracking = new Placement*[numThreads];
+
+	for(int i = 0; i < numThreads; ++i){
+		//pinmap[i].copy(pinMap);
+		tracking[i] = new Placement[decaps_num];
+	}
+	int threadCount = 0;
+	double totalDistance = 0;
+	pinmap[0].copy(pinMap);
+#pragma omp parallel
+#pragma omp for
+	for(int decapIndex = 0; decapIndex < decaps_num/4 + 1; ++decapIndex){
+		if(decapIndex == ((int)decaps_num/4)){	
+			/*for(int i = 0; i < decapIndex; ++i){
+				cout << decaps[i].associated_pin->name << '(' 
+						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
+						<< (short)decaps[i].placements[tracking[i].placement_index].y << ") ";
+			}
+			cout << "\n\tTotal Distance " << distance << "\n";*/
+		
+			totalDistance = 0;
+			for(int i = 0; i < decaps_num/4; ++i){
+				totalDistance += tracking[threadCount][i].distance;
+			}
+
+			// TODO: execute the sequential;
+			execute_permutations_concurrent(decapIndex, totalDistance, &pinmap[threadCount], tracking[threadCount]);
+
+			++threadCount;
+			if(threadCount < numThreads){
+				//cout << (int)pinmap[threadCount].total_rows << " " << (int)pinmap[threadCount].total_columns << "\n";
+				
+				pinmap[threadCount].copy(pinMap);
+		
+				for(int i = 0; i < decaps_num/4; ++i){
+					tracking[threadCount][i] = tracking[threadCount-1][i];
+				}
+		
+				cout << threadCount << ": ";
+				deplace(&decaps[decapIndex - 1], decapIndex - 1, &pinmap[threadCount], tracking[threadCount]);
+			}
+			else{
+				break;
+			}
+
+			decapIndex -= 2;
+			continue;		
+		}
+		
+		if(tracking[threadCount][decapIndex].tried_all){
+			//cout << "TRIED ALL \n";
+			
+			if(decapIndex == 0){
+				cout << "Done trying all combinations\n";
+				break;
+			}
+
+			// Clear
+			tracking[threadCount][decapIndex].placement_index = 0;
+			tracking[threadCount][decapIndex].tried_all = false;
+			deplace(&decaps[decapIndex - 1], decapIndex - 1, &pinmap[threadCount], tracking[threadCount]);
+
+			decapIndex -= 2;
+			continue;
+		}
+		
+		while(!check_location(decaps[decapIndex].placements[tracking[threadCount][decapIndex].placement_index], &pinmap[threadCount])){
+			if(tracking[threadCount][decapIndex].placement_index < decaps[decapIndex].num_placements - 1){
+				++tracking[threadCount][decapIndex].placement_index;
+				//cout << "incrementing placement index of " << decapIndex << "\n";
+			}
+			else{
+				// Clear
+				tracking[threadCount][decapIndex].placement_index = 0;
+				tracking[threadCount][decapIndex].tried_all = false;
+
+				decapIndex -= 2;
+			}
+		}
+		
+		//cout << (int)decapIndex << "-" << (int)decaps[decapIndex].placement_index << " ";
+		tracking[threadCount][decapIndex].distance = place(&decaps[decapIndex], decapIndex, &pinmap[threadCount], tracking[threadCount]);
+
+		/*execute_permutations_concurrent(decapIndex + 1, currentDistance + distance, &pinMap[threadCount], tracking[threadCount]);
+		
+		//cout << (int)decapIndex << "-" << (int)decaps[decapIndex].placement_index << "\t";
+		
+		deplace(&decaps[decapIndex], decapIndex, &pinMap[threadCount], tracking[threadCount]);*/
+
+	}
+	
+	cout << "The CURRENT THREAD COUNT IS " << threadCount << '\n';
+
+
+	//cout << "Number of Parallel Threads:" << numThreads << " Size of PinMap " << sizeof(pinMap) << ' ' << sizeof(PinMap) << '\n';
+
 }

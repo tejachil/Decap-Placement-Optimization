@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <time.h>
 #include "Decap.h"
 #include "PinMap.h"
 #include "DecapPlacement.h"
@@ -73,11 +74,27 @@ int main(int argc, char **argv){
 	}
 	else cout << "Unable to open file"; 
 	
-	DecapPlacement optimizer(numberPins, decaps);
-	PinMap * pinMap = new PinMap(rows, columns, decapDepth);
-	Placement * placementTracking = new Placement[numberPins];
-	optimizer.execute_permutation_sequential(0, 0.0, pinMap, placementTracking);
+	PinMap * pinMap_sequential = new PinMap(rows, columns, decapDepth);
+	Placement * placementTracking_sequential = new Placement[numberPins];
 	
+	clock_t time_start = clock();
+	DecapPlacement optimizer(numberPins, decaps);
+	optimizer.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
+	clock_t time_end = clock();
+
+	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";
+
+	cout << "EXECUTING PARALLEL\n";
+	PinMap * pinMap_parallel = new PinMap(rows, columns, decapDepth);
+	
+	time_start = clock();
+	optimizer.execute_permutations_parallel(pinMap_parallel);
+	time_end = clock();
+	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";
+
+	PinMap * pinMap = pinMap_sequential;
+	Placement * placementTracking = placementTracking_sequential;
+
 	for(int i = 0; i < rows+2*decapDepth; i++){
 		for(int j = 0; j < columns+2*decapDepth; ++j)
 			if(i >= decapDepth && i < rows+decapDepth && j >= decapDepth && j < columns+decapDepth)
