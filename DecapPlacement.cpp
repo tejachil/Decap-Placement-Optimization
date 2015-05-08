@@ -23,7 +23,8 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 		if(decapIndex == decaps_num){
 			if (distance < bestDistance){
 				bestDistance = distance;
-				cout << "\n";
+				//cout << "\n";
+				cout << counter << "\t";
 				for(int i = 0; i < decapIndex; ++i){
 					/*cout << decaps[i].associated_pin->name << '(' 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
@@ -34,7 +35,6 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 				//cout << "\n\tTotal Distance " << distance << "\n";
 			}
 			counter++;
-			cout << counter << "\t";
 			
 			/*for(int i = 0; i < decapIndex; ++i){
 				cout << decaps[i].associated_pin->name << '(' 
