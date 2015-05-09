@@ -31,7 +31,7 @@ int main(int argc, char **argv){
 		powerPins = new Pin[numberPins];
 		decaps = new Decap[numberPins];
 
-		cout << rows << "\tx\t" << columns << '\t' << numberPins << '\n';
+		cout << rows << "x" << columns << " BGA with " << numberPins << " pins. DecapDepth=" << decapDepth << ", AdjacencyCount=" << adjacencyCount << '\n';
 		cout << "Possible Decap Placements:\n";
 		
 		// Clear the rest of the first line from buffer
@@ -74,45 +74,33 @@ int main(int argc, char **argv){
 	}
 	else cout << "Unable to open file"; 
 	
+	clock_t time_start, time_end;
+
+	// Sequential Execution
+	cout << "\n---------EXECUTING SEQUENTIAL---------\n";
 	PinMap * pinMap_sequential = new PinMap(rows, columns, decapDepth);
 	Placement * placementTracking_sequential = new Placement[numberPins];
 	
-	clock_t time_start = clock();
-	DecapPlacement optimizer(numberPins, decaps);
-	optimizer.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
-	clock_t time_end = clock();
+	time_start = clock();
+	DecapPlacement optimizer_sequential(numberPins, decaps);
+	optimizer_sequential.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
+	time_end = clock();
 
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";
-	cout << "PERMUTATION COUNTER = " << optimizer.counter << '\n';
-	cout << "EXECUTING PARALLEL\n";
+	cout << "Number of Permutations = " << optimizer_sequential.counter << '\n';
+	optimizer_sequential.print_best_pinmap(rows, columns, decapDepth, powerPins);
+
+	// Parallel Execution
+	cout << "\n----------EXECUTING PARALLEL----------\n";
 	PinMap * pinMap_parallel = new PinMap(rows, columns, decapDepth);
 	
 	time_start = clock();
-	optimizer.execute_permutations_parallel(pinMap_parallel);
+	DecapPlacement optimizer_parallel(numberPins, decaps);
+	optimizer_parallel.execute_permutations_parallel(pinMap_parallel);
 	time_end = clock();
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for parallel.\n";
-	cout << "PERMUTATION COUNTER = " << optimizer.counter << '\n';
-	
-	PinMap * pinMap = pinMap_sequential;
-	Placement * placementTracking = placementTracking_sequential;
-
-	for(int i = 0; i < rows+2*decapDepth; i++){
-		for(int j = 0; j < columns+2*decapDepth; ++j)
-			if(i >= decapDepth && i < rows+decapDepth && j >= decapDepth && j < columns+decapDepth)
-				pinMap->map[i][j] = '.';
-			else	pinMap->map[i][j] = ' ';
-	}
-	
-	for(int i = 0; i < pinCount; ++i){
-		pinMap->map[powerPins[i].location.y][powerPins[i].location.x] = powerPins[i].name;
-		pinMap->map[decaps[i].placements[placementTracking[i].best_index].y][decaps[i].placements[placementTracking[i].best_index].x] = decaps[i].associated_pin->name;
-	}
-	
-	for(int i = 0; i < rows+2*decapDepth; i++){
-		for(int j = 0; j < columns+2*decapDepth; ++j)
-			cout << pinMap->map[i][j] << ' ';
-		cout << '\n';
-	}
+	cout << "Number of Permutations = " << optimizer_parallel.counter << '\n';
+	optimizer_parallel.print_best_pinmap(rows, columns, decapDepth, powerPins);
 	
 	return 0;
 }

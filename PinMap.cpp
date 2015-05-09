@@ -21,13 +21,20 @@ PinMap::PinMap(){
 
 }
 
-void PinMap::copy(PinMap* pinMap){
+void PinMap::new_copy(PinMap* pinMap){
 	total_rows = pinMap->total_rows;
 	total_columns = pinMap->total_columns;
 	
 	map = new char*[total_rows];
 	for(int i = 0; i < total_rows; i++){
 		map[i] = new char[total_columns];
+		for(int j = 0; j < total_columns; ++j)
+			map[i][j] = pinMap->map[i][j];
+	}
+}
+
+void PinMap::copy(PinMap* pinMap){
+	for(int i = 0; i < total_rows; i++){
 		for(int j = 0; j < total_columns; ++j)
 			map[i][j] = pinMap->map[i][j];
 	}

@@ -11,6 +11,7 @@ public:
 	PinMap(uint8_t rows, uint8_t columns, uint8_t decapDepth);
 	PinMap();
 
+	void new_copy(PinMap* pinMap);
 	void copy(PinMap* pinMap);
 	~PinMap();
 
