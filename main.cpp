@@ -83,12 +83,12 @@ int main(int argc, char **argv){
 	
 	time_start = clock();
 	DecapPlacement optimizer_sequential(numberPins, decaps);
-	optimizer_sequential.execute_permutations_concurrent(0, 0.0, pinMap_sequential, placementTracking_sequential);
+	optimizer_sequential.execute_permutations_recursive(0, 0.0, pinMap_sequential, placementTracking_sequential);
 	time_end = clock();
 
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for sequential.\n";
 	cout << "Number of Permutations = " << optimizer_sequential.counter << '\n';
-	//optimizer_sequential.print_best_pinmap(rows, columns, decapDepth, powerPins);
+	optimizer_sequential.print_best_pinmap(rows, columns, decapDepth, powerPins);
 
 	// Parallel Execution
 	cout << "\n----------EXECUTING PARALLEL----------\n";
@@ -100,7 +100,7 @@ int main(int argc, char **argv){
 	time_end = clock();
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for parallel.\n";
 	cout << "Number of Permutations = " << optimizer_parallel.counter << '\n';
-	//optimizer_parallel.print_best_pinmap(rows, columns, decapDepth, powerPins);
+	optimizer_parallel.print_best_pinmap(rows, columns, decapDepth, powerPins);
 	
 	return 0;
 }

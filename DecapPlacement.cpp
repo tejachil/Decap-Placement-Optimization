@@ -4,6 +4,8 @@
 #include <time.h>
 #include "omp.h"
 
+#define OPENACC		1 // defining this as 0 uses openmp for parallelization while 1 uses OpenACC
+
 using namespace std;
 
 DecapPlacement::DecapPlacement(uint8_t numDecaps, Decap * decapsPointer){
@@ -17,10 +19,10 @@ DecapPlacement::DecapPlacement(uint8_t numDecaps, Decap * decapsPointer){
 DecapPlacement::~DecapPlacement(){
 }
 
-void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double distance, PinMap * pinMap, Placement * tracking){
+void DecapPlacement::execute_permutations_recursive(uint8_t decapIndex, double distance, PinMap * pinMap, Placement * tracking){
 	while(true){
 		if(decapIndex == decaps_num){
-			/*if (distance < bestDistance){
+			if (distance < bestDistance){
 				bestDistance = distance;
 				
 				if(best_pinmap == NULL){
@@ -35,10 +37,10 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
 						<< (short)decaps[i].placements[tracking[i].placement_index].y << ") ";
 				*/	
-			/*		tracking[i].best_index = tracking[i].placement_index;
+					tracking[i].best_index = tracking[i].placement_index;
 				}
 				//cout << "\n\tTotal Distance " << distance << "\n";
-			}*/
+			}
 			counter++;
 			
 			/*for(int i = 0; i < decapIndex; ++i){
@@ -72,7 +74,7 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 		//cout << (int)decapIndex << "-" << (int)decaps[decapIndex].placement_index << " ";
 		
 		double currentDistance = place(&decaps[decapIndex], decapIndex, pinMap, tracking);
-		execute_permutations_concurrent(decapIndex + 1, currentDistance + distance, pinMap, tracking);
+		execute_permutations_recursive(decapIndex + 1, currentDistance + distance, pinMap, tracking);
 		
 		//cout << (int)decapIndex << "-" << (int)decaps[decapIndex].placement_index << "\t";
 		
@@ -208,23 +210,28 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap, int sequenti
 	//cout << "Using OpenACC with\n";
 	//cout << "#pragma acc loop\n";
 
-
-	//#pragma acc data copyin(pinmap[0:threadCount], tracking[0:threadCount], decapSequential, decaps_num, threadCount, decaps[0:decaps_num], bestDistance) copy(counter, best_pinmap)
-	//#pragma acc loop
-	omp_set_dynamic(1);
-	#pragma omp parallel for schedule(static)
-	cout << "Using OpenMP with\n";
-	cout << "#pragma omp parallel for schedule(static)n";
+	#if OPENACC == 1
+		cout << "Using OpenACC with\n";
+		cout << "acc loop. data copyin, data present";
+		#pragma acc data copyin(pinmap[0:threadCount], tracking[0:threadCount], decapSequential, decaps_num, threadCount, decaps[0:decaps_num], bestDistance) copy(counter, best_pinmap)
+		#pragma acc loop
+	#else
+		cout << "Using OpenMP with\n";
+		cout << "omp_set_dynamic(1)  #pragma omp parallel for schedule(static)\n";
+		omp_set_dynamic(1);
+		#pragma omp parallel for schedule(static)
+	#endif
 	{
-		//#pragma acc data present (pinmap, tracking, decapSequential, decaps_num, threadCount, decaps, bestDistance, counter, best_pinmap)
-		//#pragma omp parallel for
+		#if OPENACC == 1
+			#pragma acc data present (pinmap, tracking, decapSequential, decaps_num, threadCount, decaps, bestDistance, counter, best_pinmap)
+		#endif
 		for(int i = 0; i < threadCount; ++i){
 			double totalDistance = 0;
 			for(int j = 0; j < decapSequential; ++j){
 				totalDistance += tracking[i][j].distance;
 			}
 			
-			execute_permutations_concurrent(decapSequential, totalDistance, &pinmap[i], tracking[i]);
+			execute_permutations_recursive(decapSequential, totalDistance, &pinmap[i], tracking[i]);
 		}
 	}
 }
