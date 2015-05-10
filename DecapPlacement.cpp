@@ -125,7 +125,6 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 		tracking[i] = new Placement[decaps_num];
 	}
 	int threadCount = 0;
-	double totalDistance = 0;
 	pinmap[0].new_copy(pinMap);
 
 	for(int decapIndex = 0; decapIndex < decapSequential + 1; ++decapIndex){
@@ -207,13 +206,12 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	cout << "Concurrency is unraveled for " << threadCount << " permutations.\n";
 	
 	cout << "Using OpenACC with\n";
-	cout << "#pragma acc data copy(pinmap[0:threadCount], tracking[0:threadCount], decapSequential) create(totalDistance)\n"
-		<< "#pragma acc kernels loop\n" << "#pragma acc data present (pinmap, tracking, decapSequential, totalDistance)\n";
-	#pragma acc data copy(pinmap[0:threadCount], tracking[0:threadCount], decapSequential) create(totalDistance)
+	cout << "#pragma acc kernels loop\n";
+	//#pragma acc data copy(pinmap[0:threadCount], tracking[0:threadCount], decapSequential) create(totalDistance)
 	#pragma acc kernels loop
-	#pragma acc data present (pinmap, tracking, decapSequential, totalDistance)
+	//#pragma acc data present (pinmap, tracking, decapSequential, totalDistance)
 	for(int i = 0; i < threadCount; ++i){
-		totalDistance = 0;
+		double totalDistance = 0;
 		for(int j = 0; j < decapSequential; ++j){
 			totalDistance += tracking[i][j].distance;
 		}
