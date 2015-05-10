@@ -14,7 +14,7 @@ const string delimiter = " ";
 
 int main(int argc, char **argv){
 	
-	unsigned short rows, columns, numberPins, decapDepth, adjacencyCount;
+	unsigned short rows, columns, numberPins, decapDepth, adjacencyCount, sequentialLayers;
 	
 	Pin * powerPins;
 	Decap * decaps;
@@ -26,7 +26,7 @@ int main(int argc, char **argv){
 	ifstream pinMapFile ("DSP56311.txt");
 	if (pinMapFile.is_open()){
 		// Get information from the first line
-		pinMapFile >> rows >> columns >> numberPins >> decapDepth >> adjacencyCount;
+		pinMapFile >> rows >> columns >> numberPins >> decapDepth >> adjacencyCount >> sequentialLayers;
 		
 		powerPins = new Pin[numberPins];
 		decaps = new Decap[numberPins];
@@ -96,7 +96,7 @@ int main(int argc, char **argv){
 	
 	time_start = clock();
 	DecapPlacement optimizer_parallel(numberPins, decaps);
-	optimizer_parallel.execute_permutations_parallel(pinMap_parallel);
+	optimizer_parallel.execute_permutations_parallel(pinMap_parallel, sequentialLayers);
 	time_end = clock();
 	cout << "It took " << time_end-time_start << " clicks (" << ((float)(time_end-time_start)/CLOCKS_PER_SEC) << " seconds) for parallel.\n";
 	cout << "Number of Permutations = " << optimizer_parallel.counter << '\n';

@@ -38,9 +38,9 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 			/*		tracking[i].best_index = tracking[i].placement_index;
 				}
 				//cout << "\n\tTotal Distance " << distance << "\n";
-			}
+			}*/
 			counter++;
-			*/
+			
 			/*for(int i = 0; i < decapIndex; ++i){
 				cout << decaps[i].associated_pin->name << '(' 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
@@ -109,10 +109,10 @@ void DecapPlacement::deplace(Decap * cap, uint8_t decapIndex, PinMap * pinMap, P
 	else	tracking[decapIndex].tried_all = true;
 }
 
-void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
+void DecapPlacement::execute_permutations_parallel(PinMap * pinMap, int sequentialLayers){
 	counter = 0;
 	bestDistance = decaps_num * decaps[0].row_count * decaps[0].row_count;
-	int decapSequential = (int)(decaps_num/2 - 1);
+	int decapSequential = sequentialLayers;//(int)(decaps_num/2 - 2);
 
 	long numThreads = 1;
 	for(int i = 0; i < decapSequential; ++i)
