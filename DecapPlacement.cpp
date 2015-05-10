@@ -112,7 +112,7 @@ void DecapPlacement::deplace(Decap * cap, uint8_t decapIndex, PinMap * pinMap, P
 void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	counter = 0;
 	bestDistance = decaps_num * decaps[0].row_count * decaps[0].row_count;
-	int decapSequential = (int)(decaps_num/4);
+	int decapSequential = (int)(decaps_num/2 - 1);
 
 	long numThreads = 1;
 	for(int i = 0; i < decapSequential; ++i)
@@ -205,16 +205,18 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	
 	cout << "Concurrency is unraveled for " << threadCount << " permutations.\n";
 	
-	cout << "Using OpenACC with\n";
-	cout << "#pragma acc loop\n";
+	//cout << "Using OpenACC with\n";
+	//cout << "#pragma acc loop\n";
 
 
 	//#pragma acc data copyin(pinmap[0:threadCount], tracking[0:threadCount], decapSequential, decaps_num, threadCount, decaps[0:decaps_num], bestDistance) copy(counter, best_pinmap)
-	#pragma acc loop
+	//#pragma acc loop
+	omp_set_dynamic(1);
+	#pragma omp parallel for schedule(static)
+	cout << "Using OpenMP with\n";
+	cout << "#pragma omp parallel for schedule(static)n";
 	{
 		//#pragma acc data present (pinmap, tracking, decapSequential, decaps_num, threadCount, decaps, bestDistance, counter, best_pinmap)
-		//cout << "Using OpenMP with\n";
-		//cout << "#pragma omp parallel for\n";
 		//#pragma omp parallel for
 		for(int i = 0; i < threadCount; ++i){
 			double totalDistance = 0;
