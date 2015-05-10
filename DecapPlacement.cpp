@@ -203,7 +203,7 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 		tracking[threadCount][decapIndex].distance = place(&decaps[decapIndex], decapIndex, &pinmap[threadCount], tracking[threadCount]);
 	}
 	
-	cout << "Concurrency is unraveled for " << threadCount << " permutations.\n";
+	cout << "Concurrency is unraveled for " << threadCount << " permutations with " << decapSequential << " decaps in sequential.\n";
 	
 	//cout << "Using OpenACC with\n";
 	//cout << "#pragma acc loop\n";
