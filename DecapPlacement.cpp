@@ -20,7 +20,7 @@ DecapPlacement::~DecapPlacement(){
 void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double distance, PinMap * pinMap, Placement * tracking){
 	while(true){
 		if(decapIndex == decaps_num){
-			if (distance < bestDistance){
+			/*if (distance < bestDistance){
 				bestDistance = distance;
 				
 				if(best_pinmap == NULL){
@@ -35,10 +35,10 @@ void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double 
 						<< (short)decaps[i].placements[tracking[i].placement_index].x << ','
 						<< (short)decaps[i].placements[tracking[i].placement_index].y << ") ";
 				*/	
-					tracking[i].best_index = tracking[i].placement_index;
+			/*		tracking[i].best_index = tracking[i].placement_index;
 				}
 				//cout << "\n\tTotal Distance " << distance << "\n";
-			}
+			}*/
 			counter++;
 			
 			/*for(int i = 0; i < decapIndex; ++i){
