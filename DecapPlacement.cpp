@@ -20,7 +20,7 @@ DecapPlacement::~DecapPlacement(){
 void DecapPlacement::execute_permutations_concurrent(uint8_t decapIndex, double distance, PinMap * pinMap, Placement * tracking){
 	while(true){
 		if(decapIndex == decaps_num){
-			/if (distance < bestDistance){
+			if (distance < bestDistance){
 				bestDistance = distance;
 				
 				if(best_pinmap == NULL){
