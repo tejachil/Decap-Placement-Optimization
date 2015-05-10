@@ -211,7 +211,7 @@ void DecapPlacement::execute_permutations_parallel(PinMap * pinMap){
 	//#pragma acc kernels loop
 	//#pragma acc data present (pinmap, tracking, decapSequential, totalDistance)
 	cout << "Using OpenMP with\n";
-
+	cout << "#pragma omp parallel for\n";
 	#pragma omp parallel for
 	for(int i = 0; i < threadCount; ++i){
 		double totalDistance = 0;
