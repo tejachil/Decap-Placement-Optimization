@@ -14,19 +14,3 @@ S . . . . . . . . . . A . .
 . . . . . . . . L . . C . . 
 . . . . . . . . C . . . . . 
 
-
-Format for first line: rows, columns, pincount, decap depth, tolerence of decap adjacency
-VCCP	P
-VCCQL	L
-VCCQH	H
-VCCA	A
-VCCD	D
-VCCC	C
-VCCH 	O
-VCCS	S
-
-D(7,0) L(8,0) D(9,0) D(15,3) D(15,5) S(0,5) H(15,6) L(15,7) H(0,8) L(0,9) A(15,8) S(0,10) A(15,10) A(15,11) O(4,15) P(6,15) H(7,15) L(10,15) C(12,15) C(9,15) 
-
-D(7,0) L(8,0) D(9,0) D(11,0) D(15,4) S(0,5) H(15,6) L(15,7) H(0,8) L(0,9) A(15,8) S(0,10) A(15,10) A(15,11) O(4,15) P(6,15) H(7,15) L(10,15) C(12,15) C(9,15) 
-
-144 cores
