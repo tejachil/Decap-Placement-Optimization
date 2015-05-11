@@ -1,0 +1,361 @@
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 510000 clicks (0.51 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 336 permutations with 9 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 290000 clicks (0.29 seconds) for parallel.
+Number of Permutations = 0
+
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 510000 clicks (0.51 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 168 permutations with 8 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 230000 clicks (0.23 seconds) for parallel.
+Number of Permutations = 0
+
+
+
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 500000 clicks (0.5 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 112 permutations with 7 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 220000 clicks (0.22 seconds) for parallel.
+Number of Permutations = 0
+
+
+
+
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 510000 clicks (0.51 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 56 permutations with 6 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 200000 clicks (0.20 seconds) for parallel.
+Number of Permutations = 0
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 480000 clicks (0.48 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 28 permutations with 5 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 230000 clicks (0.23 seconds) for parallel.
+Number of Permutations = 0
+
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 500000 clicks (0.5 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 28 permutations with 5 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 260000 clicks (0.26 seconds) for parallel.
+Number of Permutations = 0
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 480000 clicks (0.48 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 16 permutations with 4 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 270000 clicks (0.27 seconds) for parallel.
+Number of Permutations = 0
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 510000 clicks (0.51 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 4 permutations with 3 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 250000 clicks (0.25 seconds) for parallel.
+Number of Permutations = 0
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 510000 clicks (0.51 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 2 permutations with 2 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 370000 clicks (0.37 seconds) for parallel.
+Number of Permutations = 0
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 500000 clicks (0.5 seconds) for sequential.
+Number of Permutations = 0
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 2 permutations with 1 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 440000 clicks (0.44 seconds) for parallel.
+Number of Permutations = 0
+14x14 BGA with 20 pins. DecapDepth=1, AdjacencyCount=2
+Possible Decap Placements:
+D: (7,0) (8,0) 
+L: (7,0) (8,0) 
+D: (9,0) (10,0) 
+D: (15,3) (15,4) (11,0) (12,0) 
+D: (15,4) (15,5) 
+S: (0,5) (0,6) 
+H: (15,6) (15,7) 
+L: (15,7) (15,8) 
+H: (0,8) (0,9) 
+L: (0,8) (0,9) 
+A: (15,8) (15,9) 
+S: (0,10) (0,11) (1,15) (2,15) 
+A: (15,10) (15,11) (12,15) (13,15) 
+A: (15,11) (15,12) (12,15) (13,15) 
+O: (4,15) (5,15) 
+P: (6,15) (7,15) 
+H: (7,15) (8,15) 
+L: (9,15) (10,15) 
+C: (15,13) (15,13) (12,15) (13,15) 
+C: (9,15) (10,15) 
+
+---------EXECUTING SEQUENTIAL---------
+It took 520000 clicks (0.52 seconds) for sequential.
+Number of Permutations = 860160
+
+----------EXECUTING PARALLEL----------
+Concurrency is unraveled for 1 permutations with 0 decaps in sequential.
+Using OpenMP with
+#pragma omp parallel for schedule(static)nIt took 400000 clicks (0.4 seconds) for parallel.
+Number of Permutations = 860160
